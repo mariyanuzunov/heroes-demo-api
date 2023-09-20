@@ -1,0 +1,21 @@
+{
+  "root": true,
+  "env": {
+    "node": true,
+    "es2022": true
+  },
+  "extends": ["standard", "plugin:import/recommended", "prettier"],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2023,
+    "sourceType": "module"
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "no-console": "off",
+    "max-len": [0, 160, 2, { "ignoreUrls": true }],
+    "camelcase": "off",
+    "func-names": ["error", "never"],
+    "no-process-exit": "off"
+  }
+}
