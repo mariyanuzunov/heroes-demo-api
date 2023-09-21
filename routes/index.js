@@ -1,4 +1,5 @@
 import authRouter from './auth.js'
+import userRouter from './user.js'
 import heroRouter from './hero.js'
 
 export default (app) => {
@@ -7,6 +8,7 @@ export default (app) => {
   })
 
   app.use('/auth', authRouter)
+  app.use('/users', userRouter)
   app.use('/hero', heroRouter)
 
   // Catch all other routes
