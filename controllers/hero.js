@@ -169,7 +169,8 @@ export const createHero = async (req, res) => {
       const validationSchema = Joi.object({
         name: Joi.string().trim().required(),
         race: Joi.string().required(),
-        avatar: Joi.string().trim().uri().required()
+        avatar: Joi.string().trim().uri().required(),
+        extraAbilities: Joi.array().items(Joi.string().trim())
       }).options({ stripUnknown: true })
 
       req.body = await validationSchema.validateAsync(req.body)
