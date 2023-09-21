@@ -113,9 +113,15 @@ export const createRace = async (req, res) => {
 
 export const getRaces = async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.body
+    const { heroClass, page = 1, limit = 10 } = req.body
 
-    const heroRaces = await HeroRace.paginate({}, { page, limit })
+    const findQuery = {}
+
+    if (heroClass) {
+      findQuery.class = heroClass
+    }
+
+    const heroRaces = await HeroRace.paginate(findQuery, { page, limit })
 
     return rest.successRes(res, heroRaces)
   } catch (error) {
