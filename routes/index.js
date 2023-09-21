@@ -9,7 +9,7 @@ export default (app) => {
 
   app.use('/auth', authRouter)
   app.use('/users', userRouter)
-  app.use('/hero', heroRouter)
+  app.use('/heroes', heroRouter)
 
   // Catch all other routes
   app.get('*', (req, res) => {
