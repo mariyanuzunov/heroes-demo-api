@@ -16,7 +16,7 @@ router.delete('/classes/:classId', adminCheck(), controller.deleteClass)
 
 // hero races
 router.post('/races', adminCheck(), controller.createRace)
-router.post('/race/list', userCheck(), controller.getRaces)
+router.post('/races/list', userCheck(), controller.getRaces)
 router.get('/races/:raceId', userCheck(), controller.getRace)
 router.put('/races/:raceId', adminCheck(), controller.updateRace)
 router.delete('/races/raceId', adminCheck(), controller.deleteRace)
