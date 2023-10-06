@@ -87,7 +87,7 @@ export const createRace = async (req, res) => {
     try {
       const validationSchema = Joi.object({
         name: Joi.string().trim().required(),
-        class: Joi.string().required(),
+        heroClass: Joi.string().required(),
         abilities: Joi.array().items(Joi.string().trim()).min(1).required()
       }).options({ stripUnknown: true })
 
@@ -96,13 +96,13 @@ export const createRace = async (req, res) => {
       return rest.errorRes(res, error.message, 422)
     }
 
-    const heroClass = await HeroClass.findOne({ _id: req.body.class })
+    const heroClass = await HeroClass.findOne({ _id: req.body.heroClass })
     if (!heroClass) {
-      return rest.errorRes(res, `Hero class ${req.body.class} not found`, 404)
+      return rest.errorRes(res, `Hero class ${req.body.heroClass} not found`, 404)
     }
 
     const heroRace = await HeroRace.create(req.body)
-    const populatedHeroRace = await HeroRace.populate(heroRace, { path: 'class' })
+    const populatedHeroRace = await HeroRace.populate(heroRace, { path: 'heroClass' })
 
     return rest.successRes(res, populatedHeroRace)
   } catch (error) {
@@ -118,7 +118,7 @@ export const getRaces = async (req, res) => {
     const findQuery = {}
 
     if (heroClass) {
-      findQuery.class = heroClass
+      findQuery.heroClass = heroClass
     }
 
     const heroRaces = await HeroRace.paginate(findQuery, { page, limit })
@@ -202,7 +202,7 @@ export const getHeroes = async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.body
 
-    const heroes = await Hero.paginate({}, { page, limit, populate: [{ path: 'race', populate: 'class' }] })
+    const heroes = await Hero.paginate({}, { page, limit, populate: [{ path: 'race', populate: 'heroClass' }] })
 
     return rest.successRes(res, heroes)
   } catch (error) {
@@ -215,7 +215,7 @@ export const getHero = async (req, res) => {
   try {
     const { heroId } = req.params
 
-    const hero = await Hero.findOne({ _id: heroId }).populate([{ path: 'race', populate: 'class' }])
+    const hero = await Hero.findOne({ _id: heroId }).populate([{ path: 'race', populate: 'heroClass' }])
     if (!hero) {
       return rest.errorRes(res, `Hero ${heroId} not found`, 404)
     }

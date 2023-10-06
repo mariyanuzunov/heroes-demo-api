@@ -4,7 +4,7 @@ import paginate from 'mongoose-paginate-v2'
 const heroRaceSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    class: { type: mongoose.Schema.Types.ObjectId, ref: 'HeroClass', required: true },
+    heroClass: { type: mongoose.Schema.Types.ObjectId, ref: 'HeroClass', required: true },
     abilities: [{ type: String }]
   },
   {
