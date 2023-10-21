@@ -19,6 +19,13 @@ const userSchema = new mongoose.Schema(
   }
 )
 
+userSchema.virtual('heroesCount', {
+  ref: 'Hero',
+  localField: '_id',
+  foreignField: 'user',
+  count: true
+})
+
 userSchema.method({
   authenticate: function (password) {
     return cryptoHelpers.generateHashedPassword(this.salt, password) === this.password

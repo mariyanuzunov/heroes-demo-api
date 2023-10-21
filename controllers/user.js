@@ -12,3 +12,16 @@ export const getCurrentUser = async (req, res) => {
     return rest.errorRes(res, error.message)
   }
 }
+
+export const getUsers = async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.body
+
+    const users = await User.paginate({}, { page, limit, populate: ['heroesCount'], sort: { createdAt: -1 }, lean: true })
+
+    return rest.successRes(res, users)
+  } catch (error) {
+    console.log(error)
+    return rest.errorRes(res, error.message)
+  }
+}
