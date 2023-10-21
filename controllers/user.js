@@ -1,4 +1,5 @@
 import User from '../models/User.js'
+import Hero from '../models/Hero.js'
 
 import rest from '../utils/rest.js'
 
@@ -20,6 +21,21 @@ export const getUsers = async (req, res) => {
     const users = await User.paginate({}, { page, limit, populate: ['heroesCount'], sort: { createdAt: -1 }, lean: true })
 
     return rest.successRes(res, users)
+  } catch (error) {
+    console.log(error)
+    return rest.errorRes(res, error.message)
+  }
+}
+
+export const getUserHeroes = async (req, res) => {
+  try {
+    const { userId } = req.params
+
+    const heroes = await Hero.find({ user: userId })
+      .populate([{ path: 'race', populate: 'heroClass' }])
+      .lean()
+
+    return rest.successRes(res, heroes)
   } catch (error) {
     console.log(error)
     return rest.errorRes(res, error.message)

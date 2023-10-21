@@ -9,5 +9,6 @@ const router = express.Router()
 
 router.post('/list', adminCheck(), controller.getUsers)
 router.get('/current', userCheck(), controller.getCurrentUser)
+router.get('/:userId/heroes', adminCheck(), controller.getUserHeroes)
 
 export default router
