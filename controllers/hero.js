@@ -239,8 +239,20 @@ export const updateHero = async (req, res) => {
 
 export const deleteHero = async (req, res) => {
   try {
-    // TODO
-    throw new Error('Not implemented')
+    const { heroId } = req.params
+
+    const hero = await Hero.findOne({ _id: heroId })
+    if (!hero) {
+      return rest.errorRes(res, `Hero ${heroId} not found`, 404)
+    }
+
+    if (hero.user.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+      return rest.errorRes(res, `Forbidden`, 403)
+    }
+
+    const deletedHero = await Hero.findOneAndDelete({ _id: heroId })
+
+    return rest.successRes(res, { _id: deletedHero._id })
   } catch (error) {
     console.log(error)
     return rest.errorRes(res, error.message)
