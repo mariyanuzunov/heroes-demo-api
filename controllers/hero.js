@@ -49,7 +49,7 @@ export const getClass = async (req, res) => {
 
     const heroClass = await HeroClass.findOne({ _id: classId })
     if (!heroClass) {
-      return rest.errorRes(res, `Hero class ${classId}`, 404)
+      return rest.errorRes(res, `Hero class ${classId} not found`, 404)
     }
 
     return rest.successRes(res, heroClass)
@@ -136,7 +136,7 @@ export const getRace = async (req, res) => {
 
     const heroRace = await HeroRace.findOne({ _id: raceId })
     if (!heroRace) {
-      return rest.errorRes(res, `Hero race ${raceId} not found`, 422)
+      return rest.errorRes(res, `Hero race ${raceId} not found`, 404)
     }
 
     return rest.successRes(res, heroRace)
